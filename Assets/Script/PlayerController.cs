@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour {
 
@@ -9,13 +11,24 @@ public class PlayerController : MonoBehaviour {
     public int XPos;
     public int YPos;
 
+    public Button btn;
+
     int XPos_old;
     int YPos_old;
+
+    IPointerClickHandler myFunction;
 
     // Use this for initialization
     void Start () {
         transform.position = gridController.GetWorldPosition(XPos, YPos);
+
+        EventSystem.current.SetSelectedGameObject(btn.gameObject);
+        
+
+        
     }
+
+    
 	
 	// Update is called once per frame
 	void Update () {
@@ -40,6 +53,8 @@ public class PlayerController : MonoBehaviour {
             move();
         }
     }
+
+
 
     void move() {
         if (gridController.IsValidPosition(XPos, YPos)) {

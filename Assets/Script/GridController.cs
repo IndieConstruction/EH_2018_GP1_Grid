@@ -44,7 +44,10 @@ public class GridController : MonoBehaviour {
         FindCell(0, 0).SetValidity(false);
         FindCell(0, YSize - 1).SetValidity(false);
 
+        CellData cellaDaModificare = FindCell(2, 2);
+        cellaDaModificare.IsValid = false;
 
+        // Parte visuale
         for (int x = 0; x < XSize; x++) {
             for (int y = 0; y < YSize; y++) {
                 CellData cell = FindCell(x, y);
@@ -88,7 +91,7 @@ public class GridController : MonoBehaviour {
             if (cell.X == x && cell.Y == y) {
                 return cell.WorldPosition;
             }
-        }   
+        }
 
         return Cells[0].WorldPosition;
     }
