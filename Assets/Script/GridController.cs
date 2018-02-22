@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class GridController : MonoBehaviour {
 
+    [Header("Prefabs")]
     public GameObject TilePrefab;
+    public GameObject CellColliderPrefab;
     public GameObject TileRotationTemplate;
+
+    [Header("Containers")]
+    public GameObject GraphicContainer;
+    public GameObject CellContainer;
+
     public float CellSize = -1f;
     public List<CellData> Cells = new List<CellData>();
 
@@ -39,21 +46,26 @@ public class GridController : MonoBehaviour {
         //    }
         //}
 
-        FindCell(XSize - 1, YSize - 1).SetValidity(false);
-        FindCell(XSize - 1, 0).SetValidity(false);
-        FindCell(0, 0).SetValidity(false);
-        FindCell(0, YSize - 1).SetValidity(false);
 
-        CellData cellaDaModificare = FindCell(2, 2);
-        cellaDaModificare.IsValid = false;
+        //FindCell(XSize - 1, YSize - 1).SetValidity(false);
+        //FindCell(XSize - 1, 0).SetValidity(false);
+        //FindCell(0, 0).SetValidity(false);
+        //FindCell(0, YSize - 1).SetValidity(false);
+
+        //CellData cellaDaModificare = FindCell(2, 2);
+        //cellaDaModificare.IsValid = false;
 
         // Parte visuale
         for (int x = 0; x < XSize; x++) {
             for (int y = 0; y < YSize; y++) {
                 CellData cell = FindCell(x, y);
                 // Debug
-                if(cell.IsValid)
-                    Instantiate(TilePrefab, cell.WorldPosition, TileRotationTemplate.transform.rotation, transform);
+                if (cell.IsValid) {
+                    Instantiate(TilePrefab, cell.WorldPosition, TileRotationTemplate.transform.rotation, GraphicContainer.transform);
+                    GameObject newCellView = Instantiate(CellColliderPrefab, cell.WorldPosition, TileRotationTemplate.transform.rotation, CellContainer.transform);
+                    newCellView.GetComponent<CellView>().SetPosition(x, y);
+                }
+                
             }
         }
     }

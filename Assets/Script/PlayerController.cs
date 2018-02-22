@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         transform.position = gridController.GetWorldPosition(XPos, YPos);
 
-        EventSystem.current.SetSelectedGameObject(btn.gameObject);
+        // EventSystem.current.SetSelectedGameObject(btn.gameObject);
         
 
         
@@ -59,10 +59,24 @@ public class PlayerController : MonoBehaviour {
     void move() {
         if (gridController.IsValidPosition(XPos, YPos)) {
             transform.DOMove(gridController.GetWorldPosition(XPos, YPos), 0.6f).SetEase(Ease.Linear);
+            CustomLogger.Log("Mi muovo in {0}:{1}", XPos, YPos);
         } else {
+            CustomLogger.Log("Non posso muovere in {0}:{1}", XPos, YPos);
             XPos = XPos_old;
             YPos = YPos_old;
         }
-            
+          
     }
+
+
+    #region API
+
+    public void SetPositionAndMove(int _x, int _y) {
+        XPos = _x;
+        YPos = _y;
+        move();
+    }
+
+    #endregion
+
 }
